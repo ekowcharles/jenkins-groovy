@@ -4,7 +4,11 @@ def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
 branches.each {
   def branchName = it.name
   def jobName = "${project}-${branchName}".replaceAll('/','-')
-  job(jobName) {
+  pipelineJob(jobName) {
+    triggers {
+      scm('* * * * *')
+    }
+
     definition {
       cpsScm {
         scm {
