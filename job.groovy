@@ -5,8 +5,14 @@ branches.each {
   def branchName = it.name
   def jobName = "${project}-${branchName}".replaceAll('/','-')
   job(jobName) {
-    scm {
-      git("git://github.com/${project}.git", branchName)
+    definition {
+      cpsScm {
+        scm {
+          git("git://github.com/${project}.git", branchName)
+        }
+
+        scriptPath("Jenkinsfile")
+      }
     }
   }
 }
